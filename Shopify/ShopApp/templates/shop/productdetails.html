@@ -1,0 +1,80 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}
+Shopify | Details
+{% endblock %}
+
+{% block content %}
+<section class="py-4 my-5 bg-light min-vh-60">
+    <div class="container">
+    
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3 text-left">{{Products.name}} details</h4>
+                <hr style="border-color: blue;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'Viewcollections' Products.category.name %}">Collection</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{Products.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-8 offset-md-2">
+                <div class="row">
+                    <!-- Image Section -->
+                    <div class="col-md-6 pic-box" style="position: relative;">
+                        {% if Products.trending %}
+                        <div class="hot" style="display: inline; background-color: orange; display: inline; padding: 5px; color: white; border-radius: 5px; position: absolute; top: 0; z-index: 5;"><i>Hot</i></div>
+                        {% endif %}
+                        <img src="{{Products.product_image.url}}" class="img-fluid rounded" alt="{{Products.name}}">
+                    </div>
+                    <!-- Product Details Section -->
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div>
+                            <h2 class="text-primary">{{Products.name | upper}}</h2>
+                            <p>{{Products.vendor}}</p>
+                            <p>{{Products.description}}</p>
+                            <p class="text-muted"><strong>Original Price: </strong><s>Rs. {{Products.original_price}}</s></p>
+                            <p class="text-success"><strong>Selling Price: </strong>Rs. {{Products.selling_price}}</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col d-flex gap-3">
+                                    {% if Products.quantity > 0 %}
+                                    <a href="#" class="btn btn-primary float-start ">
+                                        Buy
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
+                                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z"/>
+                                        </svg>
+                                    </a>
+                                    {% elif Products.quantity <= 10 %}
+                                    <a href="#" class="btn btn-warning float-start ">
+                                        Only {{ Products.quantity }}  left in stock
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
+                                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z"/>
+                                        </svg>
+                                    </a>
+                                    {% else %}
+                                    <a href="#" class="btn btn-warning float-start ">
+                                        Product out of stock
+                                    </a>
+                                    {% endif %}
+
+                                    <a href="#" class="btn btn-danger float-start">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <a href="{% url 'Viewcollections' Products.category.name %}" class="btn btn-danger">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
